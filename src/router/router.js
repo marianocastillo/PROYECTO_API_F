@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import App from '../components/App.vue';
-import ViewArchivo from '../components/ViewArchivo.vue'; // Importa tu componente ViewArchivo
+import ViewArchivo from '../components/ViewArchivo.vue';
 
 const routes = [
   {

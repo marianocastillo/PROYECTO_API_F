@@ -14,6 +14,7 @@
 
   
   export default {
+     name: "ViewArchivo",
     props: {
       urlArchivo: {
         type: String,

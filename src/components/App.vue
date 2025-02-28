@@ -13,6 +13,7 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Subir Documento</button>
+      &nbsp;
       <router-link to="/archivos" class="btn btn-primary">Ver Archivos</router-link>
       <view-archivo v-if="mostrarVistaArchivo" />
     </form>
@@ -21,15 +22,20 @@
       {{ mensaje }}
     </div>
 
-    <router-view></router-view> 
+    
   </div>
 </template>
 
+
+
 <script>
 import axios from "axios";
-
+import ViewArchivo from '../components/ViewArchivo.vue'; 
 
 export default {
+  components: {
+    ViewArchivo  
+  },
   data() {
     return {
       documento: {

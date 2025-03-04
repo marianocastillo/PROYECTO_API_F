@@ -1,95 +1,49 @@
 <template>
-  <div class="container">
-    <h2>Subir Documento</h2>
-    <form @submit.prevent="subirDocumento">
-      <div class="form-group">
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" v-model="documento.descripcion" class="form-control" required />
-      </div>
-
-      <div class="form-group">
-        <label for="archivo">Archivo:</label>
-        <input type="file" id="archivo" @change="handleFileUpload" class="form-control" required />
-      </div>
-
-      <button type="submit" class="btn btn-primary">Subir Documento</button>
-      &nbsp;
-      <router-link to="/archivos" class="btn btn-primary">Ver Archivos</router-link>
-      <view-archivo v-if="mostrarVistaArchivo" />
-    </form>
-
-    <div v-if="mensaje" class="alert mt-3" :class="mensajeTipo">
-      {{ mensaje }}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><router-link to="/" style="text-decoration: none;">Home</router-link></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#"><router-link to="/archivos" style="text-decoration: none;">Registros</router-link></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <!-- <form class="d-flex" role="search">
+        <input v-model="descripcion" @input="buscarArchivos" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form> -->
     </div>
-
-    
   </div>
+</nav>
+
+
+
+
+ <router-view></router-view>
 </template>
 
 
 
-<script>
-import axios from "axios";
-import ViewArchivo from '../components/ViewArchivo.vue'; 
-
-export default {
-  components: {
-    ViewArchivo  
-  },
-  data() {
-    return {
-      documento: {
-        descripcion: "",
-        archivo: "",
-        mostrarVistaArchivo: false,
-      },
-      mensaje: "",
-      mensajeTipo: "",
-    };
-  },
-  methods: {
-    handleFileUpload(event) {
-      this.documento.archivo = event.target.files[0];
-    },
-
-    mostrarArchivo() {
-      this.mostrarVistaArchivo = true;
-    },
-
-
-
-
-    async subirDocumento() {
-      if (!this.documento.archivo) {
-        this.mensaje = "Por favor, selecciona un archivo.";
-        this.mensajeTipo = "alert-danger";
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("Descripcion", this.documento.descripcion);
-      formData.append("Archivo", this.documento.archivo);
-
-      try {
-        const response = await axios.post("http://localhost:5015/api/Documento/Subir", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        this.mensaje = response.data.mensaje;
-        this.mensajeTipo = "alert-success";
-
-        // Limpiar formulario después de subir
-        this.documento.descripcion = "";
-        this.documento.archivo = null;
-      } catch (error) {
-        console.error("Error al subir documento:", error);
-        this.mensaje = "Error al subir el documento.";
-        this.mensajeTipo = "alert-danger";
-      }
-    },
-  },
-};
-</script>
 
 
 
@@ -99,17 +53,3 @@ export default {
 
 
 
-
-<style scoped>
-.container {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
-.form-group {
-  margin-bottom: 15px;
-}
-</style>

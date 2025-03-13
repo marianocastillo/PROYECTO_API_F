@@ -23,14 +23,14 @@
             </ul>
         </div>
 
-        <div v-if="archivoSeleccionado">
+        <!-- <div v-if="archivoSeleccionado">
 
             <iframe :src="`http://localhost:5015/api/Documento/archivos/${obtenerNombreArchivo(archivoSeleccionado)}`"
                 width="100%" height="900"></iframe>
                 <br>
-            <!-- <button type="button" class="btn btn-outline-warning text-dark"
-                @click="descargarArchivo(archivoSeleccionado)">Descargar</button> -->
-        </div>
+             <button type="button" class="btn btn-outline-warning text-dark"
+                @click="descargarArchivo(archivoSeleccionado)">Descargar</button> 
+        </div> -->
 
 
         <!-- <br><br> -->
@@ -61,8 +61,11 @@ export default {
                 });
         },
         mostrarArchivo(ruta) {
-            this.archivoSeleccionado = ruta;
+            // this.archivoSeleccionado = ruta;
+            window.open(`http://localhost:5015/api/Documento/archivos/${this.obtenerNombreArchivo(ruta)}`, '_blank');
+            
         },
+
         descargarArchivo(ruta) {
             const link = document.createElement('a');
             link.href = `http://localhost:5015/api/archivos/${encodeURIComponent(ruta)}`;
